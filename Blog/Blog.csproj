@@ -122,7 +122,11 @@
     <Content Include="Content\CSS\bootstrap.min.css" />
     <Content Include="Content\CSS\clean-blog.css" />
     <Content Include="Content\CSS\clean-blog.min.css" />
+    <Content Include="Content\CSS\font-awesome.min.css" />
+    <Content Include="Content\CSS\signin.css" />
     <Content Include="Content\CSS\simple-sidebar.css" />
+    <Content Include="Content\CSS\sweetalert.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Image\about-bg.jpg" />
     <Content Include="Content\Image\contact-bg.jpg" />
@@ -135,6 +139,8 @@
     <Content Include="Content\JS\clean-blog.min.js" />
     <Content Include="Content\JS\jquery.js" />
     <Content Include="Content\JS\jquery.min.js" />
+    <Content Include="Content\JS\Pop.js" />
+    <Content Include="Content\JS\sweetalert.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -181,6 +187,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\PostList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

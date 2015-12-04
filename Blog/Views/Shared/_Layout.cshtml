@@ -12,9 +12,18 @@
     <!-- Custom CSS -->
     <link href="~/Content/CSS/simple-sidebar.css" rel="stylesheet" />
     <link href="~/Content/CSS/clean-blog.min.css" rel="stylesheet" />
+    <link href="~/Content/CSS/signin.css" rel="stylesheet" />
+    <link href="~/Content/CSS/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom Theme JavaScript -->
+    <!-- jQuery -->
+    <script src="~/Content/JS/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Content/JS/bootstrap.min.js"></script>
 
-
-
+    <script src="~/Content/JS/clean-blog.js"></script>
+    <script src="~/Content/JS/Pop.js"></script>
+    <script src="~/Content/JS/sweetalert.min.js"></script>
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -25,96 +34,222 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        .modalWindow {
+            position: fixed;
+            font-family: arial;
+            font-size: 80%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.2);
+            z-index: 99999;
+            margin: auto;
+            opacity: 0;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            pointer-events: none;
+        }
+
+
+        .modalWindow:target {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modalWindow > div {
+            width: 400px;
+            position: relative;
+            margin: 10% auto;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .modalWindow .modalHeader {
+            padding: 5px 20px 0px 20px;
+        }
+
+        .modalWindow .modalContent {
+            padding: 0px 20px 5px 20px;
+        }
+
+        .modalWindow .modalFooter {
+            padding: 8px 20px 8px 20px;
+        }
+
+        .modalFooter {
+            background: #F1F1F1;
+            border-top: 1px solid #999;
+            -moz-box-shadow: inset 0px 13px 12px -14px #888;
+            -webkit-box-shadow: inset 0px 13px 12px -14px #888;
+            box-shadow: inset 0px 13px 12px -14px #888;
+        }
+
+            .modalFooter p {
+                color: #D4482D;
+                text-align: right;
+                margin: 0;
+                padding: 5px;
+            }
+
+
+
+        .closepop {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 22px;
+            height: 22px;
+            font-size: 10px;
+        }
+
+        .ok, .cancel {
+            width: 80px;
+            float: right;
+            margin-left: 20px;
+        }
+
+            .ok:hover {
+                background: #189CDA;
+            }
+
+            .closepop:hover, .cancel:hover {
+                background: #D4482D;
+            }
+
+        .clear {
+            float: none;
+            clear: both;
+        }
+    </style>
 </head>
 <body>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand">Start Bootstrap</a>
-                    
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Start Bootstrap</a>
+
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a href="@Url.Action("Index","Home")">Home</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("About","Home")">About</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("PostList", "Home")">Sample Post</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Contact","Home")">Contact</a>
+                    </li>
+                    <li>
+                        <a href="#openModal">Log in</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    @RenderBody()
+    <div class="modalWindow" id="openModal">
+        <div>
+            <div class="modalHeader">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <a href="#close" class="closepop"><i class="fa fa-right fa-remove fa-stack-2x"></i></a>
+            </div>
+            <form class="form-signin" style="background-color:white">
+
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+    @*<div id="openModal" class="modalWindow">
+            <div>
+                <div class="modalHeader">
+                    <h2>This is a sample modal window</h2>
+                    <a href="#close" title="Close" class="close">X</a>
+                </div>
+                <div class="modalContent">
+                    <p>This is a sample modal window that can be created using CSS3 and HTML5.</p>
+                    <p>Modal windows are used, among many others, to display login/register forms; advertisements; or just notifications to the user. They frequently contain critical information, that user must attend in order to return to the page.</p>
+                </div>
+                <div class="modalFooter">
+                    <a href="#cancel" title="Cancel" class="cancel">Cancel</a>
+                    <a href="#ok" title="Ok" class="ok">Apply</a>
+                    <p>Keep in mind that this is a demo</p>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>*@
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
                         <li>
-                            <a id="menu-toggle" href="#menu-toggle">menu-toggle</a>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index","Home")">Home</a>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("About","Home")">About</a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("PostList", "Home")">Sample Post</a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Contact","Home")">Contact</a>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
                         </li>
                     </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container -->
-        </nav>
-
-        @RenderBody()
-
-
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <ul class="list-inline text-center">
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
-                    </div>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
 
-    <!-- Custom Theme JavaScript -->
-    <!-- jQuery -->
-    <script src="~/Content/JS/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="~/Content/JS/bootstrap.min.js"></script>
 
-    <script src="~/Content/JS/clean-blog.js"></script>
 
 </body>
 
