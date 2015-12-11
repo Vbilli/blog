@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Blog.Models.LoginModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -24,6 +25,7 @@
     <script src="~/Content/JS/clean-blog.js"></script>
     <script src="~/Content/JS/Pop.js"></script>
     <script src="~/Content/JS/sweetalert.min.js"></script>
+    @RenderSection("Scripts", false)
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -35,6 +37,14 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
+
+        ul.message-dropdown {
+            padding: 0;
+            max-height: 250px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
         .modalWindow {
             position: fixed;
             font-family: arial;
@@ -54,32 +64,32 @@
         }
 
 
-        .modalWindow:target {
-            opacity: 1;
-            pointer-events: auto;
-        }
+            .modalWindow:target {
+                opacity: 1;
+                pointer-events: auto;
+            }
 
-        .modalWindow > div {
-            width: 400px;
-            position: relative;
-            margin: 10% auto;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            background: #fff;
-        }
+            .modalWindow > div {
+                width: 400px;
+                position: relative;
+                margin: 10% auto;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                background: #fff;
+            }
 
-        .modalWindow .modalHeader {
-            padding: 5px 20px 0px 20px;
-        }
+            .modalWindow .modalHeader {
+                padding: 5px 20px 0px 20px;
+            }
 
-        .modalWindow .modalContent {
-            padding: 0px 20px 5px 20px;
-        }
+            .modalWindow .modalContent {
+                padding: 0px 20px 5px 20px;
+            }
 
-        .modalWindow .modalFooter {
-            padding: 8px 20px 8px 20px;
-        }
+            .modalWindow .modalFooter {
+                padding: 8px 20px 8px 20px;
+            }
 
         .modalFooter {
             background: #F1F1F1;
@@ -130,7 +140,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -159,9 +169,117 @@
                     <li>
                         <a href="@Url.Action("Contact","Home")">Contact</a>
                     </li>
-                    <li>
-                        <a href="#openModal">Log in</a>
-                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu message-dropdown">
+                                <li class="message-preview">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <img class="media-object" alt="" src="http://placehold.it/50x50">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">
+                                                    <strong>John Smith</strong>
+                                                </h5>
+                                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="message-preview">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <img class="media-object" alt="" src="http://placehold.it/50x50">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">
+                                                    <strong>John Smith</strong>
+                                                </h5>
+                                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="message-preview">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <img class="media-object" alt="" src="http://placehold.it/50x50">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">
+                                                    <strong>John Smith</strong>
+                                                </h5>
+                                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="message-footer">
+                                    <a href="#">Read All New Messages</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu alert-dropdown">
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">View All</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fa fa-user"></i> @User.Identity.Name <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="#openModal">Log in</a>
+                        </li>
+                    }
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -170,27 +288,39 @@
     </nav>
 
     @RenderBody()
+
+
     <div class="modalWindow" id="openModal">
         <div>
             <div class="modalHeader">
                 <h2 class="form-signin-heading">Please sign in</h2>
                 <a href="#close" class="closepop"><i class="fa fa-right fa-remove fa-stack-2x"></i></a>
             </div>
-            <form class="form-signin" style="background-color:white">
-
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", style = "background-color:white" }))
+            {
+                @Html.AntiForgeryToken()
+                @*<form class="form-signin" style="background-color:white">*@
                 <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Email address", type = "email", id = "inputEmail", required = "" })
+                @*<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus >*@
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password", required = "", type = "password", id = "inputPassword" })
+                @*<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>*@
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="remember-me"> Remember me
+                        @Html.CheckBoxFor(m => m.RememberMe)Remember me
+                        @*<input type="checkbox" value="remember-me"> Remember me*@
                     </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </form>
+                <input id="SignUp" class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in" />
+                <p>
+                    <a href=@Url.Action("Register", "Account")>Register</a> if you don't have an account.
+                </p>
+                @*</form>*@
+            }
         </div>
     </div>
+
     @*<div id="openModal" class="modalWindow">
             <div>
                 <div class="modalHeader">

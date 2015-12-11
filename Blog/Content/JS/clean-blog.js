@@ -13,8 +13,13 @@ $(function () {
         $("#wrapper").toggleClass("toggled");
     });
 
+    $("#SignUp").on("click", function () {
 
-    $("input,textarea").jqBootstrapValidation({
+
+    })
+
+
+    $("#SendMail").jqBootstrapValidation({
         preventSubmit: true,
         submitError: function($form, event, errors) {
             // additional error messages or events
@@ -32,7 +37,7 @@ $(function () {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
             $.ajax({
-                url: "././mail/contact_me.php",
+                url: "~/AccountController/register",
                 type: "POST",
                 data: {
                     name: name,
